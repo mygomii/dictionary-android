@@ -1,10 +1,10 @@
-package com.mygomii.dictionary.data.local.dao
+package com.mygomii.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mygomii.dictionary.data.local.entity.WordEntity
+import com.mygomii.data.local.entity.WordEntity
 
 
 @Dao

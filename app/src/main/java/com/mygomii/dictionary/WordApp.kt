@@ -12,7 +12,7 @@ class WordApp : Application() {
 
         startKoin {
             androidContext(this@WordApp)
-            modules(appModule)
+            modules(appModule())
         }
     }
 }

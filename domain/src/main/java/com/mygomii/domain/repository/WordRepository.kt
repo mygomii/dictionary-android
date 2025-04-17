@@ -1,6 +1,6 @@
-package com.mygomii.dictionary.domain.repository
+package com.mygomii.domain.repository
 
-import com.mygomii.dictionary.domain.model.Word
+import com.mygomii.domain.model.Word
 
 interface WordRepository {
     suspend fun getAllWords(): List<Word>

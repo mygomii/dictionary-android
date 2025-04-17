@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mygomii.dictionary.domain.model.Word
+import com.mygomii.domain.model.Word
 
 
 @Composable

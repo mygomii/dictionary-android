@@ -1,4 +1,4 @@
-package com.mygomii.dictionary.data.local.entity
+package com.mygomii.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

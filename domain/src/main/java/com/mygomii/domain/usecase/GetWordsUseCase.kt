@@ -1,6 +1,6 @@
-package com.mygomii.dictionary.domain.usecase
+package com.mygomii.domain.usecase
 
-import com.mygomii.dictionary.domain.repository.WordRepository
+import com.mygomii.domain.repository.WordRepository
 
 class GetWordsUseCase(
     private val repository: WordRepository

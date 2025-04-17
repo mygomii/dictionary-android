@@ -1,4 +1,4 @@
-package com.mygomii.dictionary.domain.model
+package com.mygomii.domain.model
 
 data class Word(
     val id: Long = 0,

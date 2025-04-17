@@ -1,9 +1,9 @@
-package com.mygomii.dictionary.data.repository
+package com.mygomii.data.repository
 
-import com.mygomii.dictionary.data.local.dao.WordDao
-import com.mygomii.dictionary.data.local.entity.WordEntity
-import com.mygomii.dictionary.domain.model.Word
-import com.mygomii.dictionary.domain.repository.WordRepository
+import com.mygomii.data.local.dao.WordDao
+import com.mygomii.data.local.entity.WordEntity
+import com.mygomii.domain.model.Word
+import com.mygomii.domain.repository.WordRepository
 
 class WordRepositoryImpl(private val wordDao: WordDao) : WordRepository {
     override suspend fun getAllWords(): List<Word> =

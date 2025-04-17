@@ -2,9 +2,9 @@ package com.mygomii.dictionary.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mygomii.dictionary.domain.model.Word
-import com.mygomii.dictionary.domain.usecase.GetWordsUseCase
-import com.mygomii.dictionary.domain.usecase.InsertWordUseCase
+import com.mygomii.domain.model.Word
+import com.mygomii.domain.usecase.GetWordsUseCase
+import com.mygomii.domain.usecase.InsertWordUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
