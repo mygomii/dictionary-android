@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mygomii.data.local.entity.WordEntity
 
-
 @Dao
 interface WordDao {
     @Query("SELECT * FROM words")
