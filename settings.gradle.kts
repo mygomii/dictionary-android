@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -23,3 +24,4 @@ rootProject.name = "dictionary-android"
 include(":app")
 include(":data")
 include(":domain")
+

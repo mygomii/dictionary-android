@@ -1,3 +1,7 @@
+//plugins {
+//    id("mygomii.android.application")
+//}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
