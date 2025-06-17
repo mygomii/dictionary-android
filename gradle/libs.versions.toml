@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.1"
+agp = "8.8.2"
 kotlin = "2.1.21"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -9,11 +9,11 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2024.04.01"
 lifecycleKtx = "2.6.1"
-room = "2.5.1"
+room = "2.7.1"
 ktor = "2.2.4"
 appcompat = "1.7.0"
 material = "1.12.0"
-ksp = "2.0.21-1.0.27"
+ksp = "2.1.21-2.0.1"
 koin = "3.5.3"
 navigationCompose = "2.6.0"
 ktlint = "11.6.0"
@@ -64,7 +64,7 @@ compose-compiler-gradle-plugin = { module = "org.jetbrains.kotlin:compose-compil
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }

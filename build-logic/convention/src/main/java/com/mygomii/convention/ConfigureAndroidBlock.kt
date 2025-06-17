@@ -3,11 +3,10 @@ package com.mygomii.convention
 import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun Project.configureAndroidBlock() {
     extensions.configure<ApplicationExtension>("android") {
+        namespace = "com.mygomii.dictionary"
         compileSdk = 35
 
         defaultConfig {
@@ -33,10 +32,5 @@ fun Project.configureAndroidBlock() {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
         }
-
-        project.tasks.withType<KotlinCompile>().configureEach {
-            kotlinOptions.jvmTarget = "17"
-        }
     }
 }
-

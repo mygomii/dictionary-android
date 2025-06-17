@@ -8,6 +8,5 @@ class AndroidComposeApplicationPlugin : Plugin<Project> {
         project.configureAndroidPlugins()
         project.configureAndroidBlock()
         project.configureFeature()
-        project.configureDependencies()
     }
 }
