@@ -10,6 +10,9 @@ class WordApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // TEST;
+        print("test")
+
         startKoin {
             androidContext(this@WordApp)
             modules(appModule())
