@@ -1,12 +1,9 @@
-name: Gradle Clean CI
+name: Gradle Clean & ktlint
 
-on:
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
-  gradle-clean:
+  gradle-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,5 +14,8 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Run gradle clean
+      - name: Gradle clean
         run: ./gradlew clean
+
+      - name: Run ktlint check
+        run: ./gradlew ktlintCheck
