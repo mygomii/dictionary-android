@@ -5,11 +5,6 @@ pipeline {
     SLACK_WEBHOOK_URL = credentials('SLACK_WEBHOOK_URL')
   }
 
-  options {
-    skipDefaultCheckout()
-    timeout(time: 15, unit: 'MINUTES')
-  }
-
   stages {
     stage('Checkout') {
       steps {
@@ -26,43 +21,34 @@ pipeline {
 
   post {
     success {
-      script {
-        def message = """
-✅ *PR 빌드 성공*
-• *Job:* ${env.JOB_NAME} #${env.BUILD_NUMBER}
-• *Branch:* ${env.GIT_BRANCH}
-🔗 <${env.BUILD_URL}|빌드 결과 보기>
-"""
-        sendSlack(message, 'good')
+      node {
+        script {
+          sendSlack("✅ 빌드 성공 - ${env.JOB_NAME} #${env.BUILD_NUMBER}", "good")
+        }
       }
     }
     failure {
-      script {
-        def message = """
-❌ *PR 빌드 실패*
-• *Job:* ${env.JOB_NAME} #${env.BUILD_NUMBER}
-• *Branch:* ${env.GIT_BRANCH}
-🔗 <${env.BUILD_URL}|빌드 결과 보기>
-"""
-        sendSlack(message, 'danger')
+      node {
+        script {
+          sendSlack("❌ 빌드 실패 - ${env.JOB_NAME} #${env.BUILD_NUMBER}", "danger")
+        }
       }
     }
   }
 }
 
-// Slack 메시지 전송 함수
-def sendSlack(String text, String color) {
+def sendSlack(String msg, String color) {
   def payload = [
     attachments: [[
       color: color,
-      text : text
+      text : msg + "\n🔗 <${env.BUILD_URL}|자세히 보기>"
     ]]
   ]
-  def payloadJson = groovy.json.JsonOutput.toJson(payload)
+  def json = groovy.json.JsonOutput.toJson(payload)
 
   sh """
     curl -X POST -H 'Content-type: application/json' \
-    --data '${payloadJson}' \
+    --data '${json}' \
     ${SLACK_WEBHOOK_URL}
   """
 }
