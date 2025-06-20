@@ -11,7 +11,7 @@ class WordApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Toast.makeText(this, "테스트입니다!!.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "테스트입니다.", Toast.LENGTH_SHORT).show()
         startKoin {
             androidContext(this@WordApp)
             modules(appModule())
