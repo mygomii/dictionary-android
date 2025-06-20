@@ -23,16 +23,14 @@ dependencies {
     implementation(libs.kotlin.gradlePlugin)
     compileOnly(libs.compose.compiler.gradle.plugin)
 
-    implementation("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.1.21-2.0.1")
+    implementation(libs.com.google.devtools.ksp.gradle.plugin)
 }
 
 gradlePlugin {
     plugins {
         create("androidComposeApplication") {
             id = "mygomii.android.application"
-            // 이 클래스 경로가 실제 소스의 패키지·클래스명과 100% 일치해야 합니다
-            implementationClass =
-                "com.mygomii.convention.AndroidComposeApplicationPlugin"
+            implementationClass = "com.mygomii.convention.AndroidComposeApplicationPlugin"
         }
     }
 }

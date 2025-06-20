@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.2"
+comGoogleDevtoolsKspGradlePlugin = "2.1.21-2.0.1"
 kotlin = "2.1.21"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -24,6 +25,7 @@ androidDesugarJdkLibs = "2.1.5"
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "comGoogleDevtoolsKspGradlePlugin" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
