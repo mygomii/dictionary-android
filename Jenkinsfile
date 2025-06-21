@@ -15,9 +15,9 @@ pipeline {
 
     stages {
         stage('Checkout') {
-              steps {
-                git url: 'https://github.com/mygomii/dictionary-android.git', branch: 'main'
-                }
+            steps {
+                checkout scm
+            }
         }
 
         stage('Build') {
