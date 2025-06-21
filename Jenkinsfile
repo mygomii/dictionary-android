@@ -1,54 +1,38 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    SLACK_WEBHOOK_URL = credentials('SLACK_WEBHOOK_URL')
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    environment {
+        SLACK_CREDENTIAL_ID = 'SLACK_WEBHOOK_URL'
     }
 
-    stage('Build') {
-      steps {
-        sh './gradlew clean assembleRelease'
-      }
-    }
-  }
-
-  post {
-    success {
-      node {
-        script {
-          sendSlack("✅ 빌드 성공 - ${env.JOB_NAME} #${env.BUILD_NUMBER}", "good")
+    stages {
+        stage('Build') {
+            steps {
+                sh './gradlew clean assembleRelease'
+            }
         }
-      }
     }
-    failure {
-      node {
-        script {
-          sendSlack("❌ 빌드 실패 - ${env.JOB_NAME} #${env.BUILD_NUMBER}", "danger")
+
+    post {
+        success {
+            node {
+                withCredentials([string(credentialsId: "${env.SLACK_CREDENTIAL_ID}", variable: 'WEBHOOK')]) {
+                    sh '''
+                    curl -X POST -H 'Content-type: application/json' \
+                    --data '{"text":"✅ 빌드 성공 - ${JOB_NAME} #${BUILD_NUMBER}"}' $WEBHOOK
+                    '''
+                }
+            }
         }
-      }
+        failure {
+            node {
+                withCredentials([string(credentialsId: "${env.SLACK_CREDENTIAL_ID}", variable: 'WEBHOOK')]) {
+                    sh '''
+                    curl -X POST -H 'Content-type: application/json' \
+                    --data '{"text":"❌ 빌드 실패 - ${JOB_NAME} #${BUILD_NUMBER}"}' $WEBHOOK
+                    '''
+                }
+            }
+        }
     }
-  }
-}
-
-def sendSlack(String msg, String color) {
-  def payload = [
-    attachments: [[
-      color: color,
-      text : msg + "\n🔗 <${env.BUILD_URL}|자세히 보기>"
-    ]]
-  ]
-  def json = groovy.json.JsonOutput.toJson(payload)
-
-  sh """
-    curl -X POST -H 'Content-type: application/json' \
-    --data '${json}' \
-    ${SLACK_WEBHOOK_URL}
-  """
 }
