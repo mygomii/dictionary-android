@@ -1,38 +1,47 @@
 pipeline {
-    agent any
+  agent any
 
-    environment {
-        SLACK_CREDENTIAL_ID = 'SLACK_WEBHOOK_URL'
+  environment {
+    SLACK_WEBHOOK_URL = credentials('SLACK_WEBHOOK_URL')
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/mygomii/dictionary-android.git'
+      }
     }
 
-    stages {
-        stage('Build') {
-            steps {
-                sh './gradlew clean assembleRelease'
-            }
-        }
+    stage('Build') {
+      steps {
+        sh './gradlew clean assembleDebug'
+      }
     }
+  }
 
-    post {
-        success {
-            node {
-                withCredentials([string(credentialsId: "${env.SLACK_CREDENTIAL_ID}", variable: 'WEBHOOK')]) {
-                    sh '''
-                    curl -X POST -H 'Content-type: application/json' \
-                    --data '{"text":"✅ 빌드 성공 - ${JOB_NAME} #${BUILD_NUMBER}"}' $WEBHOOK
-                    '''
-                }
-            }
-        }
-        failure {
-            node {
-                withCredentials([string(credentialsId: "${env.SLACK_CREDENTIAL_ID}", variable: 'WEBHOOK')]) {
-                    sh '''
-                    curl -X POST -H 'Content-type: application/json' \
-                    --data '{"text":"❌ 빌드 실패 - ${JOB_NAME} #${BUILD_NUMBER}"}' $WEBHOOK
-                    '''
-                }
-            }
-        }
+  post {
+    success {
+      script {
+        slackNotify("✅ 빌드 성공", "good")
+      }
     }
+    failure {
+      script {
+        slackNotify("❌ 빌드 실패", "danger")
+      }
+    }
+  }
+}
+
+def slackNotify(String message, String color) {
+  sh """
+    curl -X POST -H 'Content-type: application/json' --data '{
+      "attachments": [
+        {
+          "color": "${color}",
+          "text": "${message}"
+        }
+      ]
+    }' ${SLACK_WEBHOOK_URL}
+  """
 }
