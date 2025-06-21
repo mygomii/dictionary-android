@@ -8,47 +8,40 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        checkout scm
+        git 'https://github.com/mygomii/dictionary-android.git'
       }
     }
 
     stage('Build') {
       steps {
-        sh './gradlew clean assembleRelease'
+        sh './gradlew clean assembleDebug'
       }
     }
   }
 
   post {
     success {
-      node {
-        script {
-          sendSlack("✅ 빌드 성공 - ${env.JOB_NAME} #${env.BUILD_NUMBER}", "good")
-        }
+      script {
+        slackNotify("✅ 빌드 성공", "good")
       }
     }
     failure {
-      node {
-        script {
-          sendSlack("❌ 빌드 실패 - ${env.JOB_NAME} #${env.BUILD_NUMBER}", "danger")
-        }
+      script {
+        slackNotify("❌ 빌드 실패", "danger")
       }
     }
   }
 }
 
-def sendSlack(String msg, String color) {
-  def payload = [
-    attachments: [[
-      color: color,
-      text : msg + "\n🔗 <${env.BUILD_URL}|자세히 보기>"
-    ]]
-  ]
-  def json = groovy.json.JsonOutput.toJson(payload)
-
+def slackNotify(String message, String color) {
   sh """
-    curl -X POST -H 'Content-type: application/json' \
-    --data '${json}' \
-    ${SLACK_WEBHOOK_URL}
+    curl -X POST -H 'Content-type: application/json' --data '{
+      "attachments": [
+        {
+          "color": "${color}",
+          "text": "${message}"
+        }
+      ]
+    }' ${SLACK_WEBHOOK_URL}
   """
 }
