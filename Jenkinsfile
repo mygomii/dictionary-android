@@ -1,56 +1,50 @@
 pipeline {
-    agent any
+  agent any
 
-    environment {
-        GRADLE_OPTS = "-Dorg.gradle.jvmargs=-Xmx2g"
+  environment {
+    SLACK_WEBHOOK_URL = credentials('SLACK_WEBHOOK_URL')
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        sh './gradlew clean build'
+      }
     }
+  }
 
-    options {
-        timestamps()
-    }
-
-    parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh './gradlew clean assembleDebug'
-            }
-        }
-    }
-
-    post {
-        success {
-            slackNotify("✅ 빌드 성공 (${env.JOB_NAME} #${env.BUILD_NUMBER})", "good")
-        }
-
-        failure {
-            slackNotify("❌ 빌드 실패 (${env.JOB_NAME} #${env.BUILD_NUMBER})", "danger")
-        }
-    }
-}
-
-def slackNotify(String message, String color) {
-    withCredentials([string(credentialsId: 'SLACK_WEBHOOK_URL', variable: 'WEBHOOK')]) {
-        sh """
-        curl -X POST -H 'Content-type: application/json' --data '{
+  post {
+    success {
+      script {
+        def msg = "✅ 빌드 성공 — 브랜치 `${env.GIT_BRANCH}`, 작성자 `${env.BUILD_USER_ID}`"
+        def payload = """
+        {
           "attachments": [
             {
-              "color": "${color}",
-              "text": "${message}",
-              "footer": "Jenkins",
-              "ts": $(date +%s)
+              "color": "good",
+              "text": "$msg"
             }
           ]
-        }' $WEBHOOK
+        }
         """
+        sh "curl -X POST -H 'Content-type: application/json' --data '$payload' $SLACK_WEBHOOK_URL"
+      }
     }
+    failure {
+      script {
+        def msg = "❌ 빌드 실패 — 브랜치 `${env.GIT_BRANCH}`, 작성자 `${env.BUILD_USER_ID}`"
+        def payload = """
+        {
+          "attachments": [
+            {
+              "color": "danger",
+              "text": "$msg"
+            }
+          ]
+        }
+        """
+        sh "curl -X POST -H 'Content-type: application/json' --data '$payload' $SLACK_WEBHOOK_URL"
+      }
+    }
+  }
 }
