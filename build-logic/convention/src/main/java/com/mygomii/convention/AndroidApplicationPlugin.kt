@@ -3,7 +3,7 @@ package com.mygomii.convention
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class AndroidComposeApplicationPlugin : Plugin<Project> {
+internal class AndroidApplicationPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.configureAndroidPlugins()
         project.configureAndroidBlock()

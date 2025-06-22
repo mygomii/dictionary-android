@@ -30,9 +30,7 @@ gradlePlugin {
     plugins {
         create("androidComposeApplication") {
             id = "mygomii.android.application"
-            // 이 클래스 경로가 실제 소스의 패키지·클래스명과 100% 일치해야 합니다
-            implementationClass =
-                "com.mygomii.convention.AndroidComposeApplicationPlugin"
+            implementationClass = "com.mygomii.convention.AndroidApplicationPlugin"
         }
     }
 }

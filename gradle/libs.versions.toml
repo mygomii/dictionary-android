@@ -20,6 +20,7 @@ ktlint = "11.6.0"
 detekt = "1.22.0"
 jetbrainsKotlinJvm = "2.0.0"
 androidDesugarJdkLibs = "2.1.5"
+mygomiiAndroidApplication = "1.0.0"
 
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -70,3 +71,5 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+mygomii-android-application = { id = "mygomii.android.application" , version.ref ="mygomiiAndroidApplication"}
